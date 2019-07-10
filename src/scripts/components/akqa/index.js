@@ -4,19 +4,21 @@ class Template {
     }
     badge(badge){
         if(badge){
-            return `<span class="badge badge-primary">Exclusive Offer</span>`
-        } else return ``
-    }
+            return `<span class="badge badge-primary">Exclusive Offer</span>`;
+        } else return ``;
+    };
     saleItem(onSale){
         if(onSale){
             return `<div class="alert alert-danger col-sm-3" role="alert">
-            SALE
-            </div>`
-        } else return ``
-    }
-    getProducts(product){      
+                        SALE
+                    </div>`;
+        } else return ``;
+    };
+    
+    getProducts(product){ 
+             
            return `
-           <div class="col-lg-4 col-sm-6 mb-4">
+           <div class="col-lg-4 col-sm-12 mb-4">
            <div class="card h-100">
              <a href="#"><img class="card-img-top" src="../src/assets/Products/${product.productImage}" alt=""></a>
              <div class="card-body">
@@ -33,27 +35,49 @@ class Template {
                <button type="button" class="btn btn-dark">buy now</button>
              </div>
            </div>
-           </div>`
+           </div>`;
     }
-
-    render(){
-        console.log(this.data)
+    selectSizeTemplate(){
         return `
-                <div class="container">
-
-                
-                <h1 class="my-4">
+        <div class="container">
+                <h1 class="my-4 col-sm-2">
                     AKQA
                     <small>Code Test</small>
                 </h1>
-
+            <select id="size" class="form-control form-control-lg col-sm-2">
+                <option value="all">ALL products</option>
+                <option value="S">S</option>
+                <option value="XS">XS</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+                <option value="all">ALL products</option>
+            </select>
+        </div>`
+    }
+    sizeChange(templateLoadingArea){
+        const selectSize = document.getElementById('size');
+        selectSize.addEventListener('change',(el)=>{
+            console.log(el.srcElement.value);
+            templateLoadingArea.innerHTML = this.render(el.srcElement.value);
+        })
+    }
+    render(size = 'all'){
+        return `
+            <div class="container">
                 <div class="row">
                 ${this.data.map(product =>{
-                    return this.getProducts(product)
+                    if(size !== 'all'){
+                        if(product.size.includes(size)){
+                            return this.getProducts(product);
+                        }
+                    } else{
+                        return this.getProducts(product);
+                    }                    
                 }
                 ).join('')
-            }
-            </div>
+                }
+                </div>
             </div>
         `
     }

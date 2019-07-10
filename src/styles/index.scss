@@ -10,7 +10,9 @@ $container-width-desktop:940px;
 $container-width-tablet:640px;
 $container-width-mobile:100%;
 
-
+select.form-control{
+ margin:15px 0;
+}
 .btn{
     height: 44px;
     width: 260px;
